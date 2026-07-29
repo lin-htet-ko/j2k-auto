@@ -1,0 +1,11 @@
+.gradle/
+build/
+local.properties
+.DS_Store
+.idea/
+*.iml
+samples/**/build/
+samples/**/.gradle/
+docs/
+samples/
+README.md
