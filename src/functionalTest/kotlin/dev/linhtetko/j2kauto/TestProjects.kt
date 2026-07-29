@@ -33,7 +33,7 @@ object TestProjects {
         plugins {
             id("org.jetbrains.kotlin.jvm") version "$KOTLIN_VERSION"
             id("org.jetbrains.kotlin.plugin.serialization") version "$KOTLIN_VERSION"
-            id("dev.linhtetko.j2k-auto") version "$pluginVersion"
+            id("io.github.lin-htet-ko.j2k-auto") version "$pluginVersion"
         }
         dependencies {
             implementation("org.jetbrains.kotlinx:kotlinx-serialization-json:1.9.0")
@@ -48,7 +48,7 @@ object TestProjects {
         plugins {
             id("com.android.application") version "$AGP_VERSION"
             id("org.jetbrains.kotlin.plugin.serialization") version "2.4.0"
-            id("dev.linhtetko.j2k-auto") version "$pluginVersion"
+            id("io.github.lin-htet-ko.j2k-auto") version "$pluginVersion"
         }
         android {
             namespace = "test.app"

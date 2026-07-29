@@ -6,7 +6,7 @@ plugins {
     alias(libs.plugins.vanniktech.maven.publish)
 }
 
-group = "dev.linhtetko"
+group = "io.github.lin-htet-ko"
 version = "0.0.1"
 
 kotlin {
@@ -37,10 +37,10 @@ dependencies {
 
 gradlePlugin {
     plugins.create("j2kAuto") {
-        id = "dev.linhtetko.j2k-auto"
+        id = "io.github.lin-htet-ko.j2k-auto"
         implementationClass = "dev.linhtetko.j2kauto.gradle.J2kAutoPlugin"
         displayName = "j2k-auto"
-        description = "Generates Kotlin data classes from JSON sample files at build time"
+        description = "Generates Kotlin data classes from JSON sample files at build time."
     }
     testSourceSets(functionalTest)
 }
@@ -71,7 +71,7 @@ mavenPublishing {
         name.set("j2k-auto")
         description.set("Generates Kotlin data classes from JSON sample files at build time")
         inceptionYear.set("2026")
-        url.set("https://github.com/linhtetko/j2k-auto")
+        url.set("https://github.com/lin-htet-ko/j2k-auto")
 
         licenses {
             license {
@@ -82,15 +82,15 @@ mavenPublishing {
         }
         developers {
             developer {
-                id.set("linhtetko")
+                id.set("lin-htet-ko")
                 name.set("Lin Htet Ko")
-                url.set("https://github.com/linhtetko/")
+                url.set("https://github.com/lin-htet-ko/")
             }
         }
         scm {
-            url.set("https://github.com/linhtetko/j2k-auto/")
-            connection.set("scm:git:git://github.com/linhtetko/j2k-auto.git")
-            developerConnection.set("scm:git:ssh://git@github.com/linhtetko/j2k-auto.git")
+            url.set("https://github.com/lin-htet-ko/j2k-auto")
+            connection.set("scm:git:git://github.com/lin-htet-ko/j2k-auto.git")
+            developerConnection.set("scm:git:ssh://git@github.com/lin-htet-ko/j2k-auto.git")
         }
     }
 }
