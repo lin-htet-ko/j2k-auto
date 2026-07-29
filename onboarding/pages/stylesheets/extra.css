@@ -1,0 +1,547 @@
+/*
+ * j2k-auto docs
+ * - Type scale close to Material/Coil defaults (not a Coil clone)
+ * - Elms Sans + navy/teal brand
+ * - Light + dark (slate) themes
+ * - Responsive across phone / tablet / desktop
+ */
+
+:root {
+  --md-text-font: "Elms Sans", sans-serif;
+  --md-code-font: "Roboto Mono", ui-monospace, monospace;
+}
+
+/* ---- Light theme ---- */
+[data-md-color-scheme="default"] {
+  --j2k-brand: #2a234f;
+  --j2k-brand-deep: #1e1838;
+  --j2k-accent: #128f85;
+  --j2k-ink: #2e3038;
+  --j2k-muted: #5b5f6a;
+  --j2k-bg: #f7f7f9;
+  --j2k-panel: #ffffff;
+  --j2k-border: #e2e4ea;
+  --j2k-code-bg: #f0f1f5;
+  --j2k-nav-hover: rgba(42, 35, 79, 0.07);
+  --j2k-nav-text: var(--j2k-brand);
+  --j2k-masthead-fg: #ffffff;
+  --j2k-masthead-muted: rgba(255, 255, 255, 0.88);
+
+  --md-primary-fg-color: var(--j2k-brand);
+  --md-primary-fg-color--light: #453c70;
+  --md-primary-fg-color--dark: var(--j2k-brand-deep);
+  --md-accent-fg-color: var(--j2k-accent);
+  --md-accent-fg-color--transparent: rgba(18, 143, 133, 0.12);
+  --md-default-bg-color: var(--j2k-bg);
+  --md-default-fg-color: var(--j2k-ink);
+  --md-default-fg-color--light: var(--j2k-muted);
+  --md-typeset-a-color: var(--j2k-accent);
+  --md-code-bg-color: var(--j2k-code-bg);
+  --md-code-fg-color: #24262e;
+  --md-footer-bg-color: var(--j2k-brand);
+  --md-footer-bg-color--dark: var(--j2k-brand-deep);
+}
+
+/* ---- Dark theme ---- */
+[data-md-color-scheme="slate"] {
+  --j2k-brand: #1c1733;
+  --j2k-brand-deep: #12101f;
+  --j2k-accent: #3cbcb0;
+  --j2k-ink: #e6e8ef;
+  --j2k-muted: #a4a9b8;
+  --j2k-bg: #12121a;
+  --j2k-panel: #1a1a26;
+  --j2k-border: #2c2c3c;
+  --j2k-code-bg: #222233;
+  --j2k-nav-hover: rgba(60, 188, 176, 0.12);
+  --j2k-nav-text: #d7dbe8;
+  --j2k-masthead-fg: #ffffff;
+  --j2k-masthead-muted: rgba(255, 255, 255, 0.82);
+
+  --md-primary-fg-color: #2a2450;
+  --md-primary-fg-color--light: #3d3670;
+  --md-primary-fg-color--dark: var(--j2k-brand-deep);
+  --md-accent-fg-color: var(--j2k-accent);
+  --md-accent-fg-color--transparent: rgba(60, 188, 176, 0.14);
+  --md-default-bg-color: var(--j2k-bg);
+  --md-default-fg-color: var(--j2k-ink);
+  --md-default-fg-color--light: var(--j2k-muted);
+  --md-typeset-a-color: var(--j2k-accent);
+  --md-code-bg-color: var(--j2k-code-bg);
+  --md-code-fg-color: #e4e7f2;
+  --md-footer-bg-color: var(--j2k-brand);
+  --md-footer-bg-color--dark: var(--j2k-brand-deep);
+  --md-typeset-color: var(--j2k-ink);
+}
+
+/*
+ * Coil/Material type scale:
+ * html 125% → ~20px root; .md-typeset 0.8rem → ~16px body.
+ */
+html {
+  font-size: 125%;
+}
+
+body,
+.md-typeset {
+  font-family: var(--md-text-font);
+}
+
+.md-typeset code,
+.md-typeset pre,
+.md-typeset kbd {
+  font-family: var(--md-code-font);
+}
+
+.md-main {
+  background: var(--j2k-bg);
+}
+
+/* Prevent accidental horizontal page scroll */
+.md-container,
+.md-main,
+.md-content,
+.md-typeset {
+  min-width: 0;
+  max-width: 100%;
+}
+
+/* ---- Full-width on large screens only ---- */
+@media screen and (min-width: 76.25em) {
+  .md-grid,
+  .md-header__inner,
+  .md-main__inner,
+  .md-footer__inner {
+    max-width: none;
+  }
+
+  .md-sidebar--primary {
+    width: 14.5rem;
+  }
+
+  .md-sidebar--secondary {
+    width: 13rem;
+  }
+
+  .md-sidebar--primary {
+    padding-left: 0.75rem;
+    padding-right: 0.5rem;
+  }
+
+  .md-sidebar--secondary {
+    padding-left: 0.5rem;
+    padding-right: 0.75rem;
+  }
+
+  .md-sidebar--primary .md-nav--primary {
+    padding: 0;
+  }
+
+  .md-content {
+    max-width: none;
+    padding-left: 1rem;
+    padding-right: 1rem;
+  }
+}
+
+.md-main__inner {
+  margin-top: 0;
+}
+
+/* Top bar */
+.md-header {
+  background: var(--j2k-brand);
+  box-shadow: none;
+}
+
+.md-header__button.md-logo img,
+.md-header__button.md-logo svg {
+  width: 1.5rem;
+  height: 1.5rem;
+  border-radius: 0.2rem;
+}
+
+.md-header__title {
+  font-family: var(--md-text-font);
+  font-weight: 600;
+}
+
+.md-search__form {
+  background: rgba(255, 255, 255, 0.12);
+  border-radius: 0.2rem;
+}
+
+/* Homepage masthead */
+.j2k-masthead {
+  background: var(--j2k-brand);
+  color: var(--j2k-masthead-fg);
+  padding: 2.25rem 1.2rem 2.5rem;
+  text-align: center;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.j2k-masthead__inner {
+  max-width: 48rem;
+  margin: 0 auto;
+  padding: 0 0.5rem;
+}
+
+.j2k-masthead__title {
+  margin: 0;
+  font-family: var(--md-text-font);
+  font-size: clamp(1.55rem, 4vw + 0.8rem, 2rem);
+  font-weight: 700;
+  letter-spacing: -0.02em;
+  color: var(--j2k-masthead-fg);
+}
+
+.j2k-masthead__tagline {
+  margin: 0.7rem auto 0;
+  max-width: 36rem;
+  font-family: var(--md-text-font);
+  font-size: clamp(0.85rem, 2vw + 0.5rem, 0.95rem);
+  font-weight: 400;
+  line-height: 1.5;
+  color: var(--j2k-masthead-muted);
+}
+
+/* ---- Primary nav ---- */
+.md-sidebar--primary .md-nav--primary > .md-nav__title {
+  background: transparent;
+  box-shadow: none;
+  color: var(--j2k-muted);
+  font-size: 0.65rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  padding-left: 0;
+}
+
+/* Bordered nav panel only on desktop (drawer on smaller screens) */
+@media screen and (min-width: 76.25em) {
+  .md-sidebar--primary .md-nav--primary > .md-nav__list {
+    background: var(--j2k-panel);
+    border: 1px solid var(--j2k-border);
+  }
+
+  .md-sidebar--primary .md-nav--primary > .md-nav__list > .md-nav__item {
+    border-bottom: 1px solid var(--j2k-border) !important;
+    margin: 0 !important;
+    padding: 0 !important;
+    background: transparent;
+  }
+
+  .md-sidebar--primary .md-nav--primary > .md-nav__list > .md-nav__item:last-child {
+    border-bottom: 0 !important;
+  }
+
+  .md-sidebar--primary .md-nav__item--active > label.md-nav__link,
+  .md-sidebar--primary .md-nav__item--active > nav.md-nav--secondary {
+    display: none !important;
+  }
+}
+
+.md-sidebar--primary .md-nav--primary > .md-nav__list > .md-nav__item > a.md-nav__link {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+  margin: 0;
+  padding: 0.55rem 0.85rem;
+  border-radius: 0;
+  box-sizing: border-box;
+  overflow: hidden;
+  color: var(--j2k-nav-text) !important;
+  font-weight: 500;
+  font-size: 0.7rem;
+  line-height: 1.35;
+}
+
+.md-sidebar--primary .md-nav--primary > .md-nav__list > .md-nav__item > a.md-nav__link::before {
+  border-radius: 0;
+}
+
+.md-sidebar--primary .md-nav--primary > .md-nav__list > .md-nav__item > a.md-nav__link:hover,
+.md-sidebar--primary .md-nav--primary > .md-nav__list > .md-nav__item > a.md-nav__link:focus {
+  background: var(--j2k-nav-hover);
+  color: var(--j2k-accent) !important;
+}
+
+.md-sidebar--primary .md-nav--primary > .md-nav__list > .md-nav__item > a.md-nav__link--active {
+  background: var(--j2k-nav-hover);
+  color: var(--j2k-accent) !important;
+  font-weight: 700;
+  box-shadow: none;
+}
+
+/* Mobile / tablet drawer: do not override Material sidebar width/left.
+   A width:auto reset collapses the off-canvas drawer to 0px. */
+@media screen and (max-width: 76.1875em) {
+  .md-sidebar--primary .md-nav--primary > .md-nav__list {
+    border: 0;
+    background: transparent;
+  }
+
+  .md-sidebar--primary .md-nav--primary > .md-nav__list > .md-nav__item {
+    border-bottom: 0 !important;
+  }
+
+  /* Material drawer uses label + nested TOC for the active page */
+  .md-sidebar--primary .md-nav__item--active > label.md-nav__link {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    margin: 0;
+    padding: 0.55rem 0.85rem;
+    border-radius: 0;
+    color: var(--j2k-nav-text) !important;
+    font-weight: 700;
+    font-size: 0.7rem;
+  }
+}
+
+.md-sidebar--secondary .md-nav__title {
+  color: var(--j2k-muted);
+  font-size: 0.65rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.06em;
+  background: transparent;
+  box-shadow: none;
+}
+
+.md-sidebar--secondary .md-nav__link {
+  color: var(--j2k-muted) !important;
+  font-size: 0.68rem;
+  margin-top: 0.15rem;
+  padding: 0.3rem 0.55rem;
+  border-radius: 0;
+  overflow: hidden;
+}
+
+.md-sidebar--secondary .md-nav__link::before {
+  border-radius: 0;
+}
+
+.md-sidebar--secondary .md-nav__link--active,
+.md-sidebar--secondary .md-nav__link:hover {
+  color: var(--j2k-accent) !important;
+  background: transparent;
+}
+
+/* Content panel */
+.md-content__inner {
+  background: var(--j2k-panel);
+  border: 1px solid var(--j2k-border);
+  padding: 1.4rem 2rem 2rem;
+  margin-top: 1.1rem;
+  margin-bottom: 1.75rem;
+  max-width: none;
+  box-sizing: border-box;
+}
+
+.md-typeset {
+  font-size: 0.8rem;
+  line-height: 1.6;
+  color: var(--j2k-ink);
+  max-width: none;
+  overflow-wrap: anywhere;
+  word-wrap: break-word;
+}
+
+.md-typeset h1 {
+  font-family: var(--md-text-font);
+  font-weight: 700;
+  font-style: normal;
+  color: var(--j2k-ink);
+  margin: 0 0 0.8rem;
+  padding: 0;
+  border: 0;
+  font-size: 2em;
+  line-height: 1.3;
+  letter-spacing: -0.01em;
+}
+
+.md-typeset h1::after {
+  display: none;
+}
+
+.md-content:has(.j2k-home-flag) .md-typeset > h1:first-of-type {
+  display: none !important;
+}
+
+.md-typeset h2 {
+  font-family: var(--md-text-font);
+  font-weight: 700;
+  font-style: normal;
+  color: var(--j2k-ink);
+  border: 0;
+  padding: 0;
+  margin-top: 1.6rem;
+  margin-bottom: 0.6rem;
+  font-size: 1.5625em;
+  line-height: 1.4;
+  letter-spacing: -0.01em;
+}
+
+.md-typeset h3 {
+  font-family: var(--md-text-font);
+  font-weight: 700;
+  font-style: normal;
+  color: var(--j2k-ink);
+  border: 0;
+  padding: 0;
+  margin-top: 1.25rem;
+  margin-bottom: 0.45rem;
+  font-size: 1.25em;
+  line-height: 1.4;
+}
+
+.md-typeset a {
+  color: var(--j2k-accent) !important;
+  font-weight: 500;
+  text-decoration: none;
+}
+
+.md-typeset a:hover {
+  text-decoration: underline;
+  text-underline-offset: 0.12em;
+}
+
+.md-typeset pre {
+  max-width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.md-typeset pre > code {
+  background: var(--j2k-code-bg);
+  border: 1px solid var(--j2k-border);
+  border-radius: 0.2rem;
+  box-shadow: none;
+  line-height: 1.5;
+  display: block;
+  max-width: 100%;
+  box-sizing: border-box;
+  white-space: pre;
+}
+
+.md-typeset code {
+  background: var(--j2k-code-bg);
+  border-radius: 0.15rem;
+  font-weight: 400;
+  padding: 0.05em 0.3em;
+  overflow-wrap: anywhere;
+}
+
+.md-typeset table:not([class]) {
+  display: block;
+  width: 100%;
+  max-width: 100%;
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  border: 1px solid var(--j2k-border);
+  border-radius: 0.2rem;
+  box-shadow: none;
+}
+
+.md-typeset table:not([class]) th {
+  background: var(--j2k-brand);
+  color: #fff;
+  font-weight: 600;
+  font-style: normal;
+}
+
+[data-md-color-scheme="slate"] .md-typeset table:not([class]) th {
+  background: #2a2450;
+  color: var(--j2k-ink);
+}
+
+.md-typeset table:not([class]) tr:hover {
+  background: var(--j2k-nav-hover);
+}
+
+.md-typeset .admonition,
+.md-typeset details {
+  border-radius: 0.2rem;
+  box-shadow: none;
+  max-width: 100%;
+  box-sizing: border-box;
+}
+
+.md-typeset img {
+  max-width: 100%;
+  height: auto;
+}
+
+.md-typeset img[alt="j2k-auto logo"] {
+  float: right;
+  width: 7.5rem;
+  max-width: 42%;
+  margin: 0 0 1rem 1.25rem;
+  border: 1px solid var(--j2k-border);
+  background: #fff;
+}
+
+[data-md-color-scheme="slate"] .md-typeset img[alt="j2k-auto logo"] {
+  background: #fff;
+}
+
+.md-typeset .j2k-meta {
+  margin: 0.85rem 0 1.2rem;
+  padding: 0;
+  list-style: none;
+  color: var(--j2k-muted);
+  clear: none;
+}
+
+.md-typeset .j2k-meta li {
+  margin: 0.25rem 0;
+}
+
+.md-typeset .j2k-meta code {
+  color: var(--j2k-ink);
+}
+
+.md-footer-meta {
+  background: var(--md-footer-bg-color--dark);
+}
+
+/* ---- Phone & tablet content tweaks ---- */
+@media screen and (max-width: 76.1875em) {
+  .md-content__inner {
+    border: 0;
+    padding: 0.85rem 0.9rem 1.5rem;
+    margin-top: 0;
+    margin-left: 0;
+    margin-right: 0;
+    background: transparent;
+  }
+
+  .j2k-masthead {
+    padding: 1.5rem 1rem 1.75rem;
+  }
+}
+
+@media screen and (max-width: 44em) {
+  .md-typeset img[alt="j2k-auto logo"] {
+    float: none;
+    display: block;
+    width: 6rem;
+    max-width: 40%;
+    margin: 0 auto 1rem;
+  }
+
+  .md-typeset h1 {
+    font-size: 1.65em;
+  }
+
+  .md-typeset h2 {
+    font-size: 1.35em;
+  }
+
+  .md-header__source {
+    max-width: 6.5rem;
+  }
+}

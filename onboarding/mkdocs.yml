@@ -1,0 +1,89 @@
+# Project information
+site_name: 'j2k-auto'
+site_description: 'A Gradle plugin that generates Kotlin data classes from sample JSON files at build time'
+site_author: 'Lin Htet Ko'
+site_url: 'https://lin-htet-ko.github.io/j2k-auto/'
+
+# Repository
+repo_name: 'j2k-auto'
+repo_url: 'https://github.com/lin-htet-ko/j2k-auto'
+
+# Copyright
+copyright: 'Copyright &copy; 2026 Lin Htet Ko'
+
+# Directories
+docs_dir: pages
+site_dir: site
+
+# Configuration
+theme:
+  name: 'material'
+  language: 'en'
+  custom_dir: overrides
+  logo: 'assets/j2k-auto-logo.png'
+  favicon: 'assets/j2k-auto-logo.png'
+  palette:
+    # Auto / system preference
+    - media: '(prefers-color-scheme)'
+      toggle:
+        icon: material/brightness-auto
+        name: 'Switch to light mode'
+    # Light
+    - media: '(prefers-color-scheme: light)'
+      scheme: default
+      primary: custom
+      accent: custom
+      toggle:
+        icon: material/brightness-7
+        name: 'Switch to dark mode'
+    # Dark
+    - media: '(prefers-color-scheme: dark)'
+      scheme: slate
+      primary: custom
+      accent: custom
+      toggle:
+        icon: material/brightness-4
+        name: 'Switch to light mode'
+  font: false
+  features:
+    - navigation.top
+    - content.code.copy
+    - search.suggest
+    - toc.follow
+
+# Customization
+extra:
+  social:
+    - icon: fontawesome/brands/github
+      link: 'https://github.com/lin-htet-ko/j2k-auto'
+    - icon: fontawesome/solid/box-archive
+      link: 'https://central.sonatype.com/artifact/io.github.lin-htet-ko/j2k-auto'
+
+extra_css:
+  - 'stylesheets/extra.css'
+
+# Navigation
+nav:
+  - 'Overview': index.md
+  - 'Getting Started': getting-started.md
+  - 'Implementation': implementation.md
+  - 'Change Logs': changelog.md
+  - 'Contribution': contributing.md
+
+# Extensions
+markdown_extensions:
+  - attr_list
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences
+  - pymdownx.highlight:
+      anchor_linenums: true
+  - pymdownx.inlinehilite
+  - footnotes
+  - tables
+  - toc:
+      permalink: true
+
+# Plugins
+plugins:
+  - search

@@ -9,3 +9,5 @@ samples/**/.gradle/
 docs/
 samples/
 README.md
+onboarding/site/
+onboarding/.venv/

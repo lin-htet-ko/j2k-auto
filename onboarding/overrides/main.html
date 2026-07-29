@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block fonts %}
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Elms+Sans:ital,wght@0,100..900;1,100..900&family=Roboto+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+{% endblock %}
+
+{% block header %}
+  {{ super() }}
+  {% if page and page.is_homepage %}
+  <section class="j2k-masthead">
+    <div class="j2k-masthead__inner">
+      <h1 class="j2k-masthead__title">j2k-auto</h1>
+      <p class="j2k-masthead__tagline">
+        A Gradle plugin that generates Kotlin data classes from sample JSON files at build time
+      </p>
+    </div>
+  </section>
+  {% endif %}
+{% endblock %}
+
+{% block content %}
+  {% if page and page.is_homepage %}
+  <div class="j2k-home-flag" hidden></div>
+  {% endif %}
+  {{ super() }}
+{% endblock %}
