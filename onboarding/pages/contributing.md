@@ -32,7 +32,7 @@ cd j2k-auto
 ./gradlew publishToMavenLocal
 ```
 
-The samples under `samples/j2kautoandroidsample` consume
+The samples under `samples/j2kautoandroidsample` and `samples/j2kautojvmsample` consume
 the plugin from source (`pluginManagement { includeBuild("../..") }`), so
 they're a good way to exercise real end-to-end behavior while developing.
 

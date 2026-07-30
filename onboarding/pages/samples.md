@@ -36,9 +36,37 @@ To build and run the sample, use the Gradle wrapper from the project root:
 ./gradlew :samples:j2kautoandroidsample:app:assembleDebug
 ```
 
+## JVM Sample (`j2kautojvmsample`)
+
+The **[`samples/j2kautojvmsample`](https://github.com/lin-htet-ko/j2k-auto/tree/main/samples/j2kautojvmsample)** is a pure Kotlin/JVM sample demonstrating how to use the plugin without Android.
+
+### Features
+
+-   **Pure Kotlin/JVM**: No dependence on Android Gradle Plugin.
+-   **Kotlinx Serialization**: Models are generated with `@Serializable` and used in a simple `main` function.
+-   **Standalone Build**: Like the Android sample, it uses `includeBuild` to consume the plugin from source.
+
+### Configuration
+
+```kotlin
+// samples/j2kautojvmsample/app/build.gradle.kts
+j2kAuto {
+    packageName = "com.linhtetko.j2k_auto_jvm_sample.data.model"
+    source(layout.projectDirectory.dir("src/main/j2k-auto"))
+    annotationStyle = AnnotationStyle.KOTLINX
+}
+```
+
+### Running the Sample
+
+```bash
+cd samples/j2kautojvmsample
+./gradlew :app:run
+```
+
 ## How to explore
 
-1.  Open the project in Android Studio.
-2.  Navigate to `samples/j2kautoandroidsample/app/src/main/j2k-auto/` to see the JSON source files.
-3.  Navigate to `samples/j2kautoandroidsample/app/src/main/java/` to see how the generated models are consumed in Repositories and ViewModels.
-4.  Build the project to trigger the `generateJsonModelsDebug` task and explore the generated code in `build/generated/j2kauto/`.
+1.  Open the project in Android Studio or IntelliJ IDEA.
+2.  Navigate to `samples/j2kautoandroidsample/app/src/main/j2k-auto/` or `samples/j2kautojvmsample/app/src/main/j2k-auto/` to see the JSON source files.
+3.  Navigate to the `java` or `kotlin` folders to see how models are consumed.
+4.  Build the project to trigger the `generateJsonModels` task.
