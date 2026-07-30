@@ -56,16 +56,6 @@ they're a good way to exercise real end-to-end behavior while developing.
 3. Run `./gradlew test functionalTest` locally before opening the PR.
 4. Describe the change and link any related issue in the PR description.
 
-## Releasing (maintainers)
-
-Artifacts are published to Maven Central via the
-[Sonatype Central Portal](https://central.sonatype.com), using the
-[`com.vanniktech.maven.publish`](https://github.com/vanniktech/gradle-maven-publish-plugin)
-plugin. Release credentials (Sonatype tokens, GPG signing keys) are kept
-out of the repository — see the **Publishing** section of the repository
-[`README.md`](https://github.com/lin-htet-ko/j2k-auto/blob/main/README.md)
-for the one-time account setup and release steps.
-
 ## License
 
 j2k-auto is licensed under the

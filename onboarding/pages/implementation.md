@@ -160,45 +160,8 @@ The generated directory is registered as a Kotlin source directory
 automatically, and the task output is cacheable and configuration-cache
 safe.
 
-## Usage examples
-
-### Android — Retrofit + generated models
-
-From [`samples/j2kautoandroidsample`](https://github.com/lin-htet-ko/j2k-auto/tree/main/samples/j2kautoandroidsample).
-
-The `build.gradle.kts` configures a root-array file with `rootClassName`,
-since a JSON array has no filename-derived singular class name:
-
-```kotlin
-j2kAuto {
-    packageName = "dev.linhtetko.j2kauto.sample.model"
-    annotationStyle = AnnotationStyle.KOTLINX
-    source(layout.projectDirectory.dir("src/main/json"))
-    // users.json has a root ARRAY — the generated class models one element, so name it User.
-    rootClassName("users.json", "User")
-}
-```
-
-The generated `User` class is then used directly as a Retrofit response type:
-
-```kotlin
-import dev.linhtetko.j2kauto.sample.model.User
-import retrofit2.http.GET
-
-/**
- * The response type is the j2k-auto-GENERATED [User] class: the plugin wrote
- * the @Serializable DTOs at build time from src/main/json/users.json, and the
- * kotlinx-serialization converter decodes the live response into them here.
- */
-interface UsersApi {
-    @GET("users")
-    suspend fun users(): List<User>
-}
-```
-
-A `LazyColumn` in `MainActivity` renders the decoded list, and
-`CatalogRepository` shows an offline decode of `product_catalog.json` using
-the same generated-model pattern.
+See [Samples](samples.md) for a real-world project example using Retrofit and
+generated models.
 
 ## Not yet supported
 

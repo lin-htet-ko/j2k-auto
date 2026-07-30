@@ -83,19 +83,4 @@ Hilt/KSP codegen: compilation depends on the generate task, so pressing
 After editing a JSON sample (rename a key, add a field), just build/run as
 usual — no extra command is needed, and CI needs nothing extra.
 
-## Try the samples
-
-The repository ships a runnable sample that consumes the plugin from
-source via `pluginManagement { includeBuild("../..") }`:
-
-- **[`samples/j2kautoandroidsample`](https://github.com/lin-htet-ko/j2k-auto/tree/main/samples/j2kautoandroidsample)**
-  — an AGP 9.2.1 Compose app that fetches JSONPlaceholder `/users` with
-  Retrofit and decodes the response into generated `User`/`Address`/`Company`
-  classes, rendered in a `LazyColumn`:
-
-  ```bash
-  ../../gradlew :app:assembleDebug
-  ```
-
-Next: see [Implementation](implementation.md) for the full DSL reference,
-annotation styles, and inference rules.
+Next: see [Samples](samples.md) for a real-world project example, or [Implementation](implementation.md) for the full DSL reference.

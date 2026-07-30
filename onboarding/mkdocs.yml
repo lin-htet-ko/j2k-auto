@@ -69,6 +69,7 @@ nav:
   - 'Overview': index.md
   - 'Getting Started': getting-started.md
   - 'Implementation': implementation.md
+  - 'Samples': samples.md
   - 'Change Logs': changelog.md
   - 'Contribution': contributing.md
 
