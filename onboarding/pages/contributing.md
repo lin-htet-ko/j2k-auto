@@ -19,9 +19,7 @@ src/main/kotlin/dev/linhtetko/j2kauto/
 
 The dependency direction is strict: `gradle → codegen → engine`. The engine
 knows nothing about Gradle or KotlinPoet, which keeps it fully unit-testable
-with plain JUnit. See
-[`docs/class-reference.md`](https://github.com/lin-htet-ko/j2k-auto/blob/main/docs/class-reference.md)
-for a full class-by-class walkthrough.
+with plain JUnit.
 
 ## Local development
 
@@ -34,7 +32,7 @@ cd j2k-auto
 ./gradlew publishToMavenLocal
 ```
 
-The samples under `samples/jvm-sample` and `samples/android-sample` consume
+The samples under `samples/j2kautoandroidsample` consume
 the plugin from source (`pluginManagement { includeBuild("../..") }`), so
 they're a good way to exercise real end-to-end behavior while developing.
 

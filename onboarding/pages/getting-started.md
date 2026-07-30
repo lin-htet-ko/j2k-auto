@@ -33,7 +33,7 @@ generate models:
 ```kotlin
 // build.gradle.kts
 plugins {
-    id("io.github.lin-htet-ko.j2k-auto") version "0.0.1"
+    id("io.github.lin-htet-ko.j2k-auto") version "1.0.0-alpha"
 }
 ```
 
@@ -85,17 +85,10 @@ usual — no extra command is needed, and CI needs nothing extra.
 
 ## Try the samples
 
-The repository ships two runnable samples that both consume the plugin from
+The repository ships a runnable sample that consumes the plugin from
 source via `pluginManagement { includeBuild("../..") }`:
 
-- **[`samples/jvm-sample`](https://github.com/lin-htet-ko/j2k-auto/tree/main/samples/jvm-sample)**
-  — a Kotlin/JVM consumer with a runtime decode check:
-
-  ```bash
-  ../../gradlew run
-  ```
-
-- **[`samples/android-sample`](https://github.com/lin-htet-ko/j2k-auto/tree/main/samples/android-sample)**
+- **[`samples/j2kautoandroidsample`](https://github.com/lin-htet-ko/j2k-auto/tree/main/samples/j2kautoandroidsample)**
   — an AGP 9.2.1 Compose app that fetches JSONPlaceholder `/users` with
   Retrofit and decodes the response into generated `User`/`Address`/`Company`
   classes, rendered in a `LazyColumn`:

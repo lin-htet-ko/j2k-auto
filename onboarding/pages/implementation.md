@@ -1,10 +1,7 @@
 # Implementation
 
 This page covers the consumer-facing DSL, annotation styles, inference
-rules, and per-platform task wiring. For a deep dive into the plugin's
-internals (engine, codegen, Gradle wiring classes), see
-[`docs/class-reference.md`](https://github.com/lin-htet-ko/j2k-auto/blob/main/docs/class-reference.md)
-in the repository.
+rules, and per-platform task wiring.
 
 ## The `j2kAuto` extension
 
@@ -12,26 +9,26 @@ in the repository.
 import dev.linhtetko.j2kauto.AnnotationStyle
 
 j2kAuto {
-    packageName = "com.example.model"            // default: generated.j2kauto
+    packageName = "com.example.store.models"     // default: generated.j2kauto
     annotationStyle = AnnotationStyle.KOTLINX     // KOTLINX (default) | MOSHI | GSON | NONE
-    visibility = Visibility.PUBLIC               // PUBLIC (default) | INTERNAL | PRIVATE (NEW)
-    source(layout.projectDirectory.dir("src/main/json"))  // default when omitted
-    rootClassName("user_profile.json", "Profile") // optional per-file override
+    visibility = Visibility.PUBLIC               // PUBLIC (default) | INTERNAL | PRIVATE
+    source(layout.projectDirectory.dir("src/main/json/catalog"))  // default when omitted
+    rootClassName("product_details.json", "Product") // optional per-file override
 
     // useVar = true                 // var instead of val (default false)
     // defaultsForNullable = false   // drop `= null` defaults (default true)
     // alwaysAnnotate = true         // annotate every property (default false)
 
-    // NEW: Multiple targets support
+    // Multiple targets support (e.g., separating Remote API and Local Cache models)
     targets {
-        register("request") {
-            packageName = "com.example.model.request"
-            source(layout.projectDirectory.dir("src/main/json/request"))
+        register("api") {
+            packageName = "com.example.store.remote.dtos"
+            source(layout.projectDirectory.dir("src/main/json/remote"))
         }
-        register("response") {
-            packageName = "com.example.model.response"
-            source(layout.projectDirectory.dir("src/main/json/response"))
-            useVar = true // override global default for this target
+        register("local") {
+            packageName = "com.example.store.local.entities"
+            source(layout.projectDirectory.dir("src/main/json/local"))
+            visibility = Visibility.INTERNAL
         }
     }
 }
@@ -165,34 +162,9 @@ safe.
 
 ## Usage examples
 
-### JVM — runtime decode
-
-From [`samples/jvm-sample`](https://github.com/lin-htet-ko/j2k-auto/tree/main/samples/jvm-sample):
-
-```kotlin
-import kotlinx.serialization.json.Json
-import sample.model.Profile
-
-fun main() {
-    val json = """
-        {
-          "id": 7,
-          "user_name": "milo",
-          "is_active": false,
-          "home_address": { "street_name": "Raffles Place", "postal_code": "048616" },
-          "orders": [ { "order_id": 1, "total": 3.5 } ]
-        }
-    """.trimIndent()
-
-    val profile = Json.decodeFromString<Profile>(json)
-    check(profile.userName == "milo")
-    check(profile.orders.single().note == null)
-}
-```
-
 ### Android — Retrofit + generated models
 
-From [`samples/android-sample`](https://github.com/lin-htet-ko/j2k-auto/tree/main/samples/android-sample).
+From [`samples/j2kautoandroidsample`](https://github.com/lin-htet-ko/j2k-auto/tree/main/samples/j2kautoandroidsample).
 
 The `build.gradle.kts` configures a root-array file with `rootClassName`,
 since a JSON array has no filename-derived singular class name:

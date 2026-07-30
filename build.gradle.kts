@@ -7,7 +7,7 @@ plugins {
 }
 
 group = "io.github.lin-htet-ko"
-version = "0.0.1"
+version = "1.0.0-alpha"
 
 kotlin {
     jvmToolchain(17)

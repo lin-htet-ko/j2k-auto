@@ -7,7 +7,7 @@ the inferred, annotation-ready models — no hand-written DTOs.
 
 <ul class="j2k-meta">
 <li><strong>Plugin ID:</strong> <code>io.github.lin-htet-ko.j2k-auto</code></li>
-<li><strong>Artifact:</strong> <a href="https://central.sonatype.com/artifact/io.github.lin-htet-ko/j2k-auto"><code>io.github.lin-htet-ko:j2k-auto:0.0.1</code></a></li>
+<li><strong>Artifact:</strong> <a href="https://central.sonatype.com/artifact/io.github.lin-htet-ko/j2k-auto"><code>io.github.lin-htet-ko:j2k-auto:1.0.0-alpha</code></a></li>
 <li><strong>License:</strong> <a href="https://github.com/lin-htet-ko/j2k-auto/blob/main/LICENSE">Apache 2.0</a></li>
 </ul>
 
@@ -39,7 +39,7 @@ Apply the plugin and configure the `j2kAuto` extension:
 import dev.linhtetko.j2kauto.AnnotationStyle
 
 plugins {
-    id("io.github.lin-htet-ko.j2k-auto") version "0.0.1"
+    id("io.github.lin-htet-ko.j2k-auto") version "1.0.0-alpha"
 }
 
 j2kAuto {
