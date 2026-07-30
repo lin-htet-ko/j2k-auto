@@ -27,13 +27,24 @@ plugins {
 
 j2kAuto {
     packageName = "com.example.model"            // default: generated.j2kauto
+    // visibility = dev.linhtetko.j2kauto.Visibility.PUBLIC // PUBLIC (default) | INTERNAL | PRIVATE
     // source(layout.projectDirectory.dir("src/main/json"))  // default
+
+    // Support for multiple packages/sources
+    targets {
+        register("response") {
+            packageName = "com.example.model.response"
+            source(layout.projectDirectory.dir("src/main/json/response"))
+        }
+    }
 }
 ```
 
 ### 2. Add JSON Samples
 
-Place your `.json` files in `src/main/json/`. For example, `user.json`:
+Place your `.json` files in `src/main/json/`. Directory structure is
+automatically mirrored in Kotlin packages (e.g.
+`src/main/json/auth/user.json` → `com.example.model.auth.User`).
 
 ```json
 {

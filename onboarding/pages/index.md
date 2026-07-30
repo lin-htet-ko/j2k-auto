@@ -7,7 +7,7 @@ the inferred, annotation-ready models — no hand-written DTOs.
 
 <ul class="j2k-meta">
 <li><strong>Plugin ID:</strong> <code>io.github.lin-htet-ko.j2k-auto</code></li>
-<li><strong>Artifact:</strong> <a href="https://central.sonatype.com/artifact/io.github.lin-htet-ko/j2k-auto"><code>io.github.lin-htet-ko:j2k-auto:0.0.1</code></a></li>
+<li><strong>Artifact:</strong> <a href="https://central.sonatype.com/artifact/io.github.lin-htet-ko/j2k-auto"><code>io.github.lin-htet-ko:j2k-auto:1.0.0-alpha</code></a></li>
 <li><strong>License:</strong> <a href="https://github.com/lin-htet-ko/j2k-auto/blob/main/LICENSE">Apache 2.0</a></li>
 </ul>
 
@@ -18,6 +18,9 @@ Many common DTO chores are handled automatically by j2k-auto:
 - `snake_case` / `kebab-case` keys become idiomatic `camelCase`, with the
   original name preserved via `@SerialName` / `@Json` / `@SerializedName`
 - Compatible shapes unify across files into a single class
+- **Automatic subpackage mirroring** mirrors your JSON directory structure in
+  Kotlin packages
+- **Configurable visibility** (`public`, `internal`, `private`) for generated classes
 - Generation runs as part of every build (Hilt/KSP-style) — cacheable and
   configuration-cache safe
 
@@ -36,12 +39,13 @@ Apply the plugin and configure the `j2kAuto` extension:
 import dev.linhtetko.j2kauto.AnnotationStyle
 
 plugins {
-    id("io.github.lin-htet-ko.j2k-auto") version "0.0.1"
+    id("io.github.lin-htet-ko.j2k-auto") version "1.0.0-alpha"
 }
 
 j2kAuto {
     packageName = "com.example.model"
     annotationStyle = AnnotationStyle.KOTLINX
+    // visibility = Visibility.PUBLIC
 }
 ```
 

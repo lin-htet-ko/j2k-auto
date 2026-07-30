@@ -123,16 +123,6 @@ body,
     width: 13rem;
   }
 
-  .md-sidebar--primary {
-    padding-left: 0.75rem;
-    padding-right: 0.5rem;
-  }
-
-  .md-sidebar--secondary {
-    padding-left: 0.5rem;
-    padding-right: 0.75rem;
-  }
-
   .md-sidebar--primary .md-nav--primary {
     padding: 0;
   }
@@ -215,17 +205,19 @@ body,
   text-transform: uppercase;
   letter-spacing: 0.06em;
   padding-left: 0;
+  padding-bottom: 0.5rem;
+  text-align: end;
 }
 
 /* Bordered nav panel only on desktop (drawer on smaller screens) */
 @media screen and (min-width: 76.25em) {
   .md-sidebar--primary .md-nav--primary > .md-nav__list {
-    background: var(--j2k-panel);
-    border: 1px solid var(--j2k-border);
+    background: transparent;
+    border: 0;
   }
 
   .md-sidebar--primary .md-nav--primary > .md-nav__list > .md-nav__item {
-    border-bottom: 1px solid var(--j2k-border) !important;
+    border-bottom: 0 !important;
     margin: 0 !important;
     padding: 0 !important;
     background: transparent;
@@ -247,7 +239,7 @@ body,
   align-items: center;
   width: 100%;
   margin: 0;
-  padding: 0.55rem 0.85rem;
+  padding: 0.55rem 1.6rem;
   border-radius: 0;
   box-sizing: border-box;
   overflow: hidden;
@@ -315,7 +307,7 @@ body,
   color: var(--j2k-muted) !important;
   font-size: 0.68rem;
   margin-top: 0.15rem;
-  padding: 0.3rem 0.55rem;
+  padding: 0.3rem 1.05rem;
   border-radius: 0;
   overflow: hidden;
 }

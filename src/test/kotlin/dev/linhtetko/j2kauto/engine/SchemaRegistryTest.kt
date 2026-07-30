@@ -20,7 +20,7 @@ class SchemaRegistryTest {
             "work_address" to address.copy(),
         )
 
-        val classes = SchemaRegistry().register(root, "User")
+        val classes = SchemaRegistry().register(root, "User", "pkg")
 
         assertEquals(listOf("User", "HomeAddress"), classes.map { it.name })
     }
@@ -34,7 +34,7 @@ class SchemaRegistryTest {
             ),
         )
 
-        val classes = SchemaRegistry().register(root, "Root")
+        val classes = SchemaRegistry().register(root, "Root", "pkg")
 
         assertEquals(listOf("Root", "Owner", "Pet", "PetOwner"), classes.map { it.name })
     }
@@ -45,7 +45,7 @@ class SchemaRegistryTest {
             "items" to ArrayType(obj("sku" to Scalar(ScalarKind.STRING))),
         )
 
-        val classes = SchemaRegistry().register(root, "Order")
+        val classes = SchemaRegistry().register(root, "Order", "pkg")
 
         assertEquals(listOf("Order", "Item"), classes.map { it.name })
     }
@@ -55,8 +55,8 @@ class SchemaRegistryTest {
         val registry = SchemaRegistry()
         val meta = obj("v" to Scalar(ScalarKind.INT))
 
-        val deltaA = registry.register(obj("meta" to meta), "A")
-        val deltaB = registry.register(obj("meta" to meta.copy()), "B")
+        val deltaA = registry.register(obj("meta" to meta), "A", "pkg")
+        val deltaB = registry.register(obj("meta" to meta.copy()), "B", "pkg")
 
         assertEquals(listOf("A", "Meta"), deltaA.map { it.name })
         // B's root is a distinct shape? No — same fields as A's root → dedupes entirely.
@@ -68,8 +68,8 @@ class SchemaRegistryTest {
     fun `shared registry parent-prefixes cross-file name collisions of different shapes`() {
         val registry = SchemaRegistry()
 
-        val deltaA = registry.register(obj("user" to obj("id" to Scalar(ScalarKind.INT))), "OrderA")
-        val deltaB = registry.register(obj("user" to obj("name" to Scalar(ScalarKind.STRING))), "OrderB")
+        val deltaA = registry.register(obj("user" to obj("id" to Scalar(ScalarKind.INT))), "OrderA", "pkg")
+        val deltaB = registry.register(obj("user" to obj("name" to Scalar(ScalarKind.STRING))), "OrderB", "pkg")
 
         assertEquals(listOf("OrderA", "User"), deltaA.map { it.name })
         assertEquals(listOf("OrderB", "OrderBUser"), deltaB.map { it.name })
@@ -79,7 +79,7 @@ class SchemaRegistryTest {
     fun `empty nested objects are not registered as classes`() {
         val registry = SchemaRegistry()
 
-        val delta = registry.register(obj("meta" to obj()), "Root")
+        val delta = registry.register(obj("meta" to obj()), "Root", "pkg")
 
         assertEquals(listOf("Root"), delta.map { it.name })
     }

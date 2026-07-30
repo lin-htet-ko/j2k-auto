@@ -33,7 +33,7 @@ generate models:
 ```kotlin
 // build.gradle.kts
 plugins {
-    id("io.github.lin-htet-ko.j2k-auto") version "0.0.1"
+    id("io.github.lin-htet-ko.j2k-auto") version "1.0.0-alpha"
 }
 ```
 
@@ -45,6 +45,7 @@ import dev.linhtetko.j2kauto.AnnotationStyle
 j2kAuto {
     packageName = "com.example.model"          // default: generated.j2kauto
     annotationStyle = AnnotationStyle.KOTLINX  // KOTLINX (default) | MOSHI | GSON | NONE
+    // visibility = Visibility.PUBLIC          // PUBLIC (default) | INTERNAL | PRIVATE
     source(layout.projectDirectory.dir("src/main/json")) // default when omitted
 }
 ```
@@ -52,16 +53,22 @@ j2kAuto {
 ## Add your first JSON sample
 
 Place a sample file under the configured source directory (default
-`src/main/json`):
+`src/main/json`). You can use subdirectories to organize your JSON
+files — j2k-auto will mirror this structure in the generated Kotlin
+packages:
 
 ```json
-// src/main/json/user_profile.json
+// src/main/json/auth/user_profile.json
 {
   "id": 1,
   "user_name": "lin",
   "orders": [{ "order_id": 1, "note": "x" }, { "order_id": 2 }]
 }
 ```
+
+The example above would generate the `Profile` class in the
+`com.example.model.auth` package (assuming the base package is
+configured as `com.example.model`).
 
 ## Build
 
@@ -78,17 +85,10 @@ usual — no extra command is needed, and CI needs nothing extra.
 
 ## Try the samples
 
-The repository ships two runnable samples that both consume the plugin from
+The repository ships a runnable sample that consumes the plugin from
 source via `pluginManagement { includeBuild("../..") }`:
 
-- **[`samples/jvm-sample`](https://github.com/lin-htet-ko/j2k-auto/tree/main/samples/jvm-sample)**
-  — a Kotlin/JVM consumer with a runtime decode check:
-
-  ```bash
-  ../../gradlew run
-  ```
-
-- **[`samples/android-sample`](https://github.com/lin-htet-ko/j2k-auto/tree/main/samples/android-sample)**
+- **[`samples/j2kautoandroidsample`](https://github.com/lin-htet-ko/j2k-auto/tree/main/samples/j2kautoandroidsample)**
   — an AGP 9.2.1 Compose app that fetches JSONPlaceholder `/users` with
   Retrofit and decodes the response into generated `User`/`Address`/`Company`
   classes, rendered in a `LazyColumn`:

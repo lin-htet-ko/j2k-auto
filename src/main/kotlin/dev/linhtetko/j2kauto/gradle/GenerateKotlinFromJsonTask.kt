@@ -1,6 +1,7 @@
 package dev.linhtetko.j2kauto.gradle
 
 import dev.linhtetko.j2kauto.AnnotationStyle
+import dev.linhtetko.j2kauto.Visibility
 import dev.linhtetko.j2kauto.codegen.CodegenOptions
 import dev.linhtetko.j2kauto.codegen.J2kPipeline
 import dev.linhtetko.j2kauto.codegen.JsonInput
@@ -42,6 +43,9 @@ abstract class GenerateKotlinFromJsonTask : DefaultTask() {
     abstract val annotationStyle: Property<AnnotationStyle>
 
     @get:Input
+    abstract val visibility: Property<Visibility>
+
+    @get:Input
     abstract val useVar: Property<Boolean>
 
     @get:Input
@@ -62,10 +66,12 @@ abstract class GenerateKotlinFromJsonTask : DefaultTask() {
         out.deleteRecursively()
         out.mkdirs()
 
-        val inputs = sourceFiles.asFileTree
-            .matching { it.include("**/*.json") }
-            .files
-            .map { JsonInput(it.name, it.readText()) }
+        val inputs = mutableListOf<JsonInput>()
+        sourceFiles.asFileTree.matching { it.include("**/*.json") }.visit { details ->
+            if (!details.isDirectory) {
+                inputs += JsonInput(details.relativePath.pathString, details.file.readText())
+            }
+        }
         if (inputs.isEmpty()) return
 
         val specs = J2kPipeline.generate(
@@ -76,6 +82,7 @@ abstract class GenerateKotlinFromJsonTask : DefaultTask() {
                 useVar = useVar.get(),
                 defaultsForNullable = defaultsForNullable.get(),
                 alwaysAnnotate = alwaysAnnotate.get(),
+                visibility = visibility.get(),
             ),
             rootClassNames = rootClassNames.get(),
         )

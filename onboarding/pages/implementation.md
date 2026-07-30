@@ -1,10 +1,7 @@
 # Implementation
 
 This page covers the consumer-facing DSL, annotation styles, inference
-rules, and per-platform task wiring. For a deep dive into the plugin's
-internals (engine, codegen, Gradle wiring classes), see
-[`docs/class-reference.md`](https://github.com/lin-htet-ko/j2k-auto/blob/main/docs/class-reference.md)
-in the repository.
+rules, and per-platform task wiring.
 
 ## The `j2kAuto` extension
 
@@ -12,14 +9,28 @@ in the repository.
 import dev.linhtetko.j2kauto.AnnotationStyle
 
 j2kAuto {
-    packageName = "com.example.model"            // default: generated.j2kauto
+    packageName = "com.example.store.models"     // default: generated.j2kauto
     annotationStyle = AnnotationStyle.KOTLINX     // KOTLINX (default) | MOSHI | GSON | NONE
-    source(layout.projectDirectory.dir("src/main/json"))  // default when omitted
-    rootClassName("user_profile.json", "Profile") // optional per-file override
+    visibility = Visibility.PUBLIC               // PUBLIC (default) | INTERNAL | PRIVATE
+    source(layout.projectDirectory.dir("src/main/json/catalog"))  // default when omitted
+    rootClassName("product_details.json", "Product") // optional per-file override
 
     // useVar = true                 // var instead of val (default false)
     // defaultsForNullable = false   // drop `= null` defaults (default true)
     // alwaysAnnotate = true         // annotate every property (default false)
+
+    // Multiple targets support (e.g., separating Remote API and Local Cache models)
+    targets {
+        register("api") {
+            packageName = "com.example.store.remote.dtos"
+            source(layout.projectDirectory.dir("src/main/json/remote"))
+        }
+        register("local") {
+            packageName = "com.example.store.local.entities"
+            source(layout.projectDirectory.dir("src/main/json/local"))
+            visibility = Visibility.INTERNAL
+        }
+    }
 }
 ```
 
@@ -27,11 +38,40 @@ j2kAuto {
 | --- | --- | --- |
 | `packageName` | `generated.j2kauto` | Package for the generated Kotlin files |
 | `annotationStyle` | `AnnotationStyle.KOTLINX` | Which serialization annotations to emit |
+| `visibility` | `Visibility.PUBLIC` | Visibility modifier for generated classes |
 | `source(dir)` | `src/main/json` | Directory scanned for `.json` samples |
-| `rootClassName(file, name)` | inferred from filename | Overrides the generated class name for a specific file — required when a file's root is a JSON **array**, since there's no filename-derived singular name |
+| `rootClassName(file, name)` | inferred from filename | Overrides the generated class name for a specific file |
 | `useVar` | `false` | Emit `var` properties instead of `val` |
 | `defaultsForNullable` | `true` | Emit `= null` defaults for nullable properties |
-| `alwaysAnnotate` | `false` | Annotate every property, even when the serialized name already matches the Kotlin name |
+| `alwaysAnnotate` | `false` | Annotate every property |
+| `targets { ... }` | N/A | Register additional generation targets with unique packages/sources |
+
+### How Multiple Targets Work
+
+Each registered target in the `targets` block:
+1. Inherits all top-level properties (like `annotationStyle` or `useVar`) as defaults.
+2. Can override any of these properties individually.
+3. Generates code into its own separate output directory to prevent class name collisions.
+4. Registers its output as a source directory for the project.
+
+The top-level `packageName` and `source(...)` are treated as the "default" target. If you only need one package, you can keep using the top-level configuration without the `targets` block.
+
+## Automatic Subpackage Mirroring
+
+j2k-auto automatically mirrors your directory structure in the generated
+Kotlin packages. If your base package is `com.example.model` and you have:
+
+- `src/main/json/user.json` → `com.example.model.User`
+- `src/main/json/auth/login.json` → `com.example.model.auth.Login`
+- `src/main/json/data/dtos/product.json` → `com.example.model.data.dtos.Product`
+
+This keeps your models organized without needing to register separate
+targets for every subdirectory.
+
+> [!NOTE]
+> If you use `rootClassName` overrides for files in subdirectories, you must
+> provide the relative path as the key:
+> `rootClassName("auth/login.json", "LoginRequest")`
 
 ## Annotation styles
 
@@ -46,6 +86,18 @@ j2kAuto {
 
 Unknown or conflicting shapes fall back to `JsonElement` (`KOTLINX`) or
 `Any?` (other styles).
+
+## Visibility options
+
+`Visibility` controls the visibility modifier of generated data classes:
+
+| Visibility | Modifier |
+| --- | --- |
+| `PUBLIC` (default) | `public` |
+| `INTERNAL` | `internal` |
+| `PRIVATE` | `private` |
+
+Note: `PRIVATE` classes are generated as top-level private classes in their respective files.
 
 ## Inference rules
 
@@ -110,34 +162,9 @@ safe.
 
 ## Usage examples
 
-### JVM — runtime decode
-
-From [`samples/jvm-sample`](https://github.com/lin-htet-ko/j2k-auto/tree/main/samples/jvm-sample):
-
-```kotlin
-import kotlinx.serialization.json.Json
-import sample.model.Profile
-
-fun main() {
-    val json = """
-        {
-          "id": 7,
-          "user_name": "milo",
-          "is_active": false,
-          "home_address": { "street_name": "Raffles Place", "postal_code": "048616" },
-          "orders": [ { "order_id": 1, "total": 3.5 } ]
-        }
-    """.trimIndent()
-
-    val profile = Json.decodeFromString<Profile>(json)
-    check(profile.userName == "milo")
-    check(profile.orders.single().note == null)
-}
-```
-
 ### Android — Retrofit + generated models
 
-From [`samples/android-sample`](https://github.com/lin-htet-ko/j2k-auto/tree/main/samples/android-sample).
+From [`samples/j2kautoandroidsample`](https://github.com/lin-htet-ko/j2k-auto/tree/main/samples/j2kautoandroidsample).
 
 The `build.gradle.kts` configures a root-array file with `rootClassName`,
 since a JSON array has no filename-derived singular class name:

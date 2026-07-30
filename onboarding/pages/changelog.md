@@ -4,6 +4,22 @@ All notable changes to j2k-auto are documented on this page. The format is
 loosely based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project follows [Semantic Versioning](https://semver.org/).
 
+## 1.0.0-alpha
+
+### Added
+
+- Support for **Multiple Targets**: You can now define multiple `targets { register("name") { ... } }` in the `j2kAuto` block.
+    - Each target can have its own `packageName`, `source`, and overrides for all other configuration options.
+    - Targets inherit top-level configuration as conventions.
+    - Separate generation tasks and output directories per target to prevent class name collisions.
+- **Automatic Subpackage Mirroring**: The plugin now automatically reflects the directory structure of your JSON source files in the generated Kotlin packages.
+    - Cross-package type resolution: Models in different subpackages can now reference each other correctly with automatic imports.
+    - Updated `rootClassName` DSL to support relative paths for files in subdirectories.
+- Support for **Configurable Visibility**: You can now set the visibility modifier of generated data classes via the `visibility` option in the `j2kAuto` block.
+    - Supported visibility modifiers: `PUBLIC` (default), `INTERNAL`, and `PRIVATE`.
+
+---
+
 ## 0.0.1 — Initial release
 
 ### Added
