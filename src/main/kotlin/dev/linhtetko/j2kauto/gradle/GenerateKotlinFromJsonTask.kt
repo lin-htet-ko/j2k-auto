@@ -66,10 +66,12 @@ abstract class GenerateKotlinFromJsonTask : DefaultTask() {
         out.deleteRecursively()
         out.mkdirs()
 
-        val inputs = sourceFiles.asFileTree
-            .matching { it.include("**/*.json") }
-            .files
-            .map { JsonInput(it.name, it.readText()) }
+        val inputs = mutableListOf<JsonInput>()
+        sourceFiles.asFileTree.matching { it.include("**/*.json") }.visit { details ->
+            if (!details.isDirectory) {
+                inputs += JsonInput(details.relativePath.pathString, details.file.readText())
+            }
+        }
         if (inputs.isEmpty()) return
 
         val specs = J2kPipeline.generate(

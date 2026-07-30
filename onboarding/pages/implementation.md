@@ -14,13 +14,26 @@ import dev.linhtetko.j2kauto.AnnotationStyle
 j2kAuto {
     packageName = "com.example.model"            // default: generated.j2kauto
     annotationStyle = AnnotationStyle.KOTLINX     // KOTLINX (default) | MOSHI | GSON | NONE
-    visibility = Visibility.PUBLIC               // PUBLIC (default) | INTERNAL | PRIVATE
+    visibility = Visibility.PUBLIC               // PUBLIC (default) | INTERNAL | PRIVATE (NEW)
     source(layout.projectDirectory.dir("src/main/json"))  // default when omitted
     rootClassName("user_profile.json", "Profile") // optional per-file override
 
     // useVar = true                 // var instead of val (default false)
     // defaultsForNullable = false   // drop `= null` defaults (default true)
     // alwaysAnnotate = true         // annotate every property (default false)
+
+    // NEW: Multiple targets support
+    targets {
+        register("request") {
+            packageName = "com.example.model.request"
+            source(layout.projectDirectory.dir("src/main/json/request"))
+        }
+        register("response") {
+            packageName = "com.example.model.response"
+            source(layout.projectDirectory.dir("src/main/json/response"))
+            useVar = true // override global default for this target
+        }
+    }
 }
 ```
 
@@ -30,10 +43,38 @@ j2kAuto {
 | `annotationStyle` | `AnnotationStyle.KOTLINX` | Which serialization annotations to emit |
 | `visibility` | `Visibility.PUBLIC` | Visibility modifier for generated classes |
 | `source(dir)` | `src/main/json` | Directory scanned for `.json` samples |
-| `rootClassName(file, name)` | inferred from filename | Overrides the generated class name for a specific file — required when a file's root is a JSON **array**, since there's no filename-derived singular name |
+| `rootClassName(file, name)` | inferred from filename | Overrides the generated class name for a specific file |
 | `useVar` | `false` | Emit `var` properties instead of `val` |
 | `defaultsForNullable` | `true` | Emit `= null` defaults for nullable properties |
-| `alwaysAnnotate` | `false` | Annotate every property, even when the serialized name already matches the Kotlin name |
+| `alwaysAnnotate` | `false` | Annotate every property |
+| `targets { ... }` | N/A | Register additional generation targets with unique packages/sources |
+
+### How Multiple Targets Work
+
+Each registered target in the `targets` block:
+1. Inherits all top-level properties (like `annotationStyle` or `useVar`) as defaults.
+2. Can override any of these properties individually.
+3. Generates code into its own separate output directory to prevent class name collisions.
+4. Registers its output as a source directory for the project.
+
+The top-level `packageName` and `source(...)` are treated as the "default" target. If you only need one package, you can keep using the top-level configuration without the `targets` block.
+
+## Automatic Subpackage Mirroring
+
+j2k-auto automatically mirrors your directory structure in the generated
+Kotlin packages. If your base package is `com.example.model` and you have:
+
+- `src/main/json/user.json` → `com.example.model.User`
+- `src/main/json/auth/login.json` → `com.example.model.auth.Login`
+- `src/main/json/data/dtos/product.json` → `com.example.model.data.dtos.Product`
+
+This keeps your models organized without needing to register separate
+targets for every subdirectory.
+
+> [!NOTE]
+> If you use `rootClassName` overrides for files in subdirectories, you must
+> provide the relative path as the key:
+> `rootClassName("auth/login.json", "LoginRequest")`
 
 ## Annotation styles
 

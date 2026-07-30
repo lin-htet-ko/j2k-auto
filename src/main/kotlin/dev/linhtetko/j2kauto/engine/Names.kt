@@ -29,6 +29,25 @@ object Names {
     }
 
     /**
+     * Converts a relative directory path (e.g. "auth/v1") into a sanitized
+     * Kotlin subpackage (e.g. ".auth.v1"). Returns an empty string if the
+     * path is empty or only contains word separators.
+     */
+    fun subpackageName(relativePath: String): String {
+        val segments = relativePath.split('/', '\\')
+            .filter { it.isNotEmpty() }
+            .map { segment ->
+                val words = words(segment)
+                if (words.isEmpty()) return@map ""
+                val name = words.joinToString("") { it.lowercase() }
+                if (name.first().isDigit()) "_$name" else name
+            }
+            .filter { it.isNotEmpty() }
+
+        return if (segments.isEmpty()) "" else segments.joinToString(".", prefix = ".")
+    }
+
+    /**
      * Naive singularization for array-derived class names: `Items` → `Item`.
      * Heuristic only — leaves short words and `-ss` endings alone.
      */

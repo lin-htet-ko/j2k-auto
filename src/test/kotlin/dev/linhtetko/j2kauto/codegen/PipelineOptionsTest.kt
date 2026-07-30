@@ -54,6 +54,49 @@ class PipelineOptionsTest {
     }
 
     @Test
+    fun `subpackage mirroring works`() {
+        val input = JsonInput("data/dtos/product.json", """{"id": 1}""")
+        val specs = J2kPipeline.generate(listOf(input), "com.example", AnnotationStyle.NONE)
+
+        assertEquals(1, specs.size)
+        val spec = specs.single()
+        assertEquals("com.example.data.dtos", spec.packageName)
+        assertTrue("data class Product(" in spec.toString())
+    }
+
+    @Test
+    fun `cross-package references work`() {
+        val metaInput = JsonInput("common/meta.json", """{"v": 1}""")
+        val productInput = JsonInput("data/product.json", """{"id": 1, "meta": {"v": 1}}""")
+
+        val specs = J2kPipeline.generate(listOf(metaInput, productInput), "com.example", AnnotationStyle.NONE)
+
+        assertEquals(2, specs.size)
+        val metaSpec = specs.find { it.name == "Meta" }!!
+        val productSpec = specs.find { it.name == "Product" }!!
+
+        assertEquals("com.example.common", metaSpec.packageName)
+        assertEquals("com.example.data", productSpec.packageName)
+
+        val productCode = productSpec.toString()
+        assertTrue("import com.example.common.Meta" in productCode)
+        assertTrue("public val meta: Meta" in productCode)
+    }
+
+    @Test
+    fun `rootClassName override wins over file name with subpackages`() {
+        val input = JsonInput("data/dtos/product.json", """{"id": 1}""")
+        val spec = J2kPipeline.generate(
+            listOf(input),
+            "com.example",
+            AnnotationStyle.NONE,
+            rootClassNames = mapOf("data/dtos/product.json" to "MyProduct"),
+        ).single()
+        assertEquals("com.example.data.dtos", spec.packageName)
+        assertTrue("data class MyProduct(" in spec.toString())
+    }
+
+    @Test
     fun `rootClassName override wins over file name`() {
         val spec = J2kPipeline.generate(
             listOf(input),

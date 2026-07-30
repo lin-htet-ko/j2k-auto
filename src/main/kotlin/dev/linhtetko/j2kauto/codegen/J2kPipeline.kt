@@ -3,13 +3,14 @@ package dev.linhtetko.j2kauto.codegen
 import com.squareup.kotlinpoet.FileSpec
 import dev.linhtetko.j2kauto.AnnotationStyle
 import dev.linhtetko.j2kauto.engine.FileSchemas
+import dev.linhtetko.j2kauto.engine.InferredType.ObjectType
 import dev.linhtetko.j2kauto.engine.Names
 import dev.linhtetko.j2kauto.engine.SchemaInferrer
 import dev.linhtetko.j2kauto.engine.SchemaRegistry
 import dev.linhtetko.j2kauto.engine.ShapeUnifier
 
-/** One JSON sample: the file name drives the root class name. */
-data class JsonInput(val fileName: String, val text: String)
+/** One JSON sample: the relative path drives the root class name and subpackage. */
+data class JsonInput(val relativePath: String, val text: String)
 
 /**
  * The full text-to-FileSpec pipeline shared by the Gradle task and tests:
@@ -28,23 +29,39 @@ object J2kPipeline {
     ): List<FileSpec> {
         val strategy = AnnotationStrategy.of(style)
         val parsed = inputs
-            .sortedBy { it.fileName } // deterministic across file systems
+            .sortedBy { it.relativePath } // deterministic across file systems
             .map { input ->
-                val rootName = rootClassNames[input.fileName]
-                    ?: Names.className(input.fileName.removeSuffix(".json")).ifEmpty { "Root" }
-                Triple(input.fileName, rootName, SchemaInferrer.inferRoot(input.text, input.fileName))
+                val fileName = input.relativePath.split('/', '\\').last()
+                val rootName = rootClassNames[input.relativePath]
+                    ?: Names.className(fileName.removeSuffix(".json")).ifEmpty { "Root" }
+                val subPackagePath = input.relativePath.replace('\\', '/').substringBeforeLast('/', "")
+                val fullPackage = packageName + Names.subpackageName(subPackagePath)
+
+                ParsedInput(
+                    input.relativePath,
+                    rootName,
+                    fullPackage,
+                    SchemaInferrer.inferRoot(input.text, input.relativePath),
+                )
             }
 
-        val unification = ShapeUnifier.unify(parsed.map { it.third })
+        val unification = ShapeUnifier.unify(parsed.map { it.root })
         val registry = SchemaRegistry()
-        val files = parsed.mapNotNull { (fileName, rootName, root) ->
-            val delta = registry.register(unification.canonicalOf(root), rootName)
-            if (delta.isEmpty()) null else FileSchemas(fileName, rootName, delta)
+        val files = parsed.mapNotNull { p ->
+            val delta = registry.register(unification.canonicalOf(p.root), p.rootName, p.packageName)
+            if (delta.isEmpty()) null else FileSchemas(p.relativePath, p.rootName, p.packageName, delta)
         }
 
-        val nameByShape = registry.allClasses.associate { it.type to it.name }
+        val classByShape = registry.allClasses.associateBy { SchemaRegistry.structuralKey(it.type) }
         return files.map { file ->
-            KotlinFileGenerator.generate(file, packageName, strategy, options, nameByShape)
+            KotlinFileGenerator.generate(file, strategy, options, classByShape)
         }
     }
+
+    private data class ParsedInput(
+        val relativePath: String,
+        val rootName: String,
+        val packageName: String,
+        val root: ObjectType,
+    )
 }

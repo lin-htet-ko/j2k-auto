@@ -18,6 +18,9 @@ Many common DTO chores are handled automatically by j2k-auto:
 - `snake_case` / `kebab-case` keys become idiomatic `camelCase`, with the
   original name preserved via `@SerialName` / `@Json` / `@SerializedName`
 - Compatible shapes unify across files into a single class
+- **Automatic subpackage mirroring** mirrors your JSON directory structure in
+  Kotlin packages
+- **Configurable visibility** (`public`, `internal`, `private`) for generated classes
 - Generation runs as part of every build (Hilt/KSP-style) — cacheable and
   configuration-cache safe
 

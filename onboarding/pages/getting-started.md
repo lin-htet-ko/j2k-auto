@@ -53,16 +53,22 @@ j2kAuto {
 ## Add your first JSON sample
 
 Place a sample file under the configured source directory (default
-`src/main/json`):
+`src/main/json`). You can use subdirectories to organize your JSON
+files — j2k-auto will mirror this structure in the generated Kotlin
+packages:
 
 ```json
-// src/main/json/user_profile.json
+// src/main/json/auth/user_profile.json
 {
   "id": 1,
   "user_name": "lin",
   "orders": [{ "order_id": 1, "note": "x" }, { "order_id": 2 }]
 }
 ```
+
+The example above would generate the `Profile` class in the
+`com.example.model.auth` package (assuming the base package is
+configured as `com.example.model`).
 
 ## Build
 

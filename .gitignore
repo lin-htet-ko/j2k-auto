@@ -11,3 +11,4 @@ docs/*.md
 onboarding/site/
 onboarding/.venv/
 .artifacts/
+samples/j2kautosamplelocal/
