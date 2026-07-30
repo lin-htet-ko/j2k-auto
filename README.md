@@ -27,6 +27,7 @@ plugins {
 
 j2kAuto {
     packageName = "com.example.model"            // default: generated.j2kauto
+    // visibility = dev.linhtetko.j2kauto.Visibility.PUBLIC // PUBLIC (default) | INTERNAL | PRIVATE
     // source(layout.projectDirectory.dir("src/main/json"))  // default
 }
 ```

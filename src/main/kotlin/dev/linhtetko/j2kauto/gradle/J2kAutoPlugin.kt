@@ -1,6 +1,7 @@
 package dev.linhtetko.j2kauto.gradle
 
 import dev.linhtetko.j2kauto.AnnotationStyle
+import dev.linhtetko.j2kauto.Visibility
 import org.gradle.api.Plugin
 import org.gradle.api.Project
 import org.gradle.api.provider.Provider
@@ -12,6 +13,7 @@ class J2kAutoPlugin : Plugin<Project> {
         val extension = project.extensions.create("j2kAuto", J2kAutoExtension::class.java)
         extension.packageName.convention("generated.j2kauto")
         extension.annotationStyle.convention(AnnotationStyle.KOTLINX)
+        extension.visibility.convention(Visibility.PUBLIC)
         extension.useVar.convention(false)
         extension.defaultsForNullable.convention(true)
         extension.alwaysAnnotate.convention(false)
@@ -49,6 +51,7 @@ class J2kAutoPlugin : Plugin<Project> {
             task.sourceFiles.from(sources)
             task.packageName.set(extension.packageName)
             task.annotationStyle.set(extension.annotationStyle)
+            task.visibility.set(extension.visibility)
             task.useVar.set(extension.useVar)
             task.defaultsForNullable.set(extension.defaultsForNullable)
             task.alwaysAnnotate.set(extension.alwaysAnnotate)

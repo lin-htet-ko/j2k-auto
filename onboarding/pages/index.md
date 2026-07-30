@@ -42,6 +42,7 @@ plugins {
 j2kAuto {
     packageName = "com.example.model"
     annotationStyle = AnnotationStyle.KOTLINX
+    // visibility = Visibility.PUBLIC
 }
 ```
 

@@ -1,6 +1,7 @@
 package dev.linhtetko.j2kauto.gradle
 
 import dev.linhtetko.j2kauto.AnnotationStyle
+import dev.linhtetko.j2kauto.Visibility
 import dev.linhtetko.j2kauto.codegen.CodegenOptions
 import dev.linhtetko.j2kauto.codegen.J2kPipeline
 import dev.linhtetko.j2kauto.codegen.JsonInput
@@ -42,6 +43,9 @@ abstract class GenerateKotlinFromJsonTask : DefaultTask() {
     abstract val annotationStyle: Property<AnnotationStyle>
 
     @get:Input
+    abstract val visibility: Property<Visibility>
+
+    @get:Input
     abstract val useVar: Property<Boolean>
 
     @get:Input
@@ -76,6 +80,7 @@ abstract class GenerateKotlinFromJsonTask : DefaultTask() {
                 useVar = useVar.get(),
                 defaultsForNullable = defaultsForNullable.get(),
                 alwaysAnnotate = alwaysAnnotate.get(),
+                visibility = visibility.get(),
             ),
             rootClassNames = rootClassNames.get(),
         )

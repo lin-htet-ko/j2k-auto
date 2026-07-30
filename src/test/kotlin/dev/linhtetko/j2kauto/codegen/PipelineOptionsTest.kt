@@ -1,6 +1,7 @@
 package dev.linhtetko.j2kauto.codegen
 
 import dev.linhtetko.j2kauto.AnnotationStyle
+import dev.linhtetko.j2kauto.Visibility
 import org.junit.jupiter.api.Test
 import kotlin.test.assertEquals
 import kotlin.test.assertFalse
@@ -32,6 +33,24 @@ class PipelineOptionsTest {
         val text = generate(CodegenOptions(alwaysAnnotate = true))
         assertTrue("@SerialName(\"pet_name\")" in text)
         assertTrue("@SerialName(\"note\")" in text)
+    }
+
+    @Test
+    fun `internal visibility applies internal modifier`() {
+        val text = generate(CodegenOptions(visibility = Visibility.INTERNAL))
+        assertTrue("internal data class Pet(" in text)
+    }
+
+    @Test
+    fun `private visibility applies private modifier`() {
+        val text = generate(CodegenOptions(visibility = Visibility.PRIVATE))
+        assertTrue("private data class Pet(" in text)
+    }
+
+    @Test
+    fun `public visibility applies public modifier explicitly`() {
+        val text = generate(CodegenOptions(visibility = Visibility.PUBLIC))
+        assertTrue("public data class Pet(" in text)
     }
 
     @Test

@@ -1,6 +1,7 @@
 package dev.linhtetko.j2kauto.gradle
 
 import dev.linhtetko.j2kauto.AnnotationStyle
+import dev.linhtetko.j2kauto.Visibility
 import org.gradle.api.file.ConfigurableFileCollection
 import org.gradle.api.model.ObjectFactory
 import org.gradle.api.provider.MapProperty
@@ -24,6 +25,9 @@ abstract class J2kAutoExtension @Inject constructor(objects: ObjectFactory) {
 
     /** Which JSON-mapping annotations to emit. Default: [AnnotationStyle.KOTLINX]. */
     abstract val annotationStyle: Property<AnnotationStyle>
+
+    /** Visibility of the generated classes. Default: [Visibility.PUBLIC]. */
+    abstract val visibility: Property<Visibility>
 
     /** Generate `var` properties instead of `val`. Default: false. */
     abstract val useVar: Property<Boolean>

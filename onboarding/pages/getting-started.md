@@ -45,6 +45,7 @@ import dev.linhtetko.j2kauto.AnnotationStyle
 j2kAuto {
     packageName = "com.example.model"          // default: generated.j2kauto
     annotationStyle = AnnotationStyle.KOTLINX  // KOTLINX (default) | MOSHI | GSON | NONE
+    // visibility = Visibility.PUBLIC          // PUBLIC (default) | INTERNAL | PRIVATE
     source(layout.projectDirectory.dir("src/main/json")) // default when omitted
 }
 ```

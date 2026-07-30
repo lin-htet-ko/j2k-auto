@@ -51,6 +51,11 @@ object KotlinFileGenerator {
         options: CodegenOptions,
     ): TypeSpec {
         val classBuilder = TypeSpec.classBuilder(cls.name).addModifiers(KModifier.DATA)
+        when (options.visibility) {
+            dev.linhtetko.j2kauto.Visibility.PUBLIC -> classBuilder.addModifiers(KModifier.PUBLIC)
+            dev.linhtetko.j2kauto.Visibility.INTERNAL -> classBuilder.addModifiers(KModifier.INTERNAL)
+            dev.linhtetko.j2kauto.Visibility.PRIVATE -> classBuilder.addModifiers(KModifier.PRIVATE)
+        }
         strategy.classAnnotations().forEach(classBuilder::addAnnotation)
 
         val constructor = FunSpec.constructorBuilder()

@@ -14,6 +14,7 @@ import dev.linhtetko.j2kauto.AnnotationStyle
 j2kAuto {
     packageName = "com.example.model"            // default: generated.j2kauto
     annotationStyle = AnnotationStyle.KOTLINX     // KOTLINX (default) | MOSHI | GSON | NONE
+    visibility = Visibility.PUBLIC               // PUBLIC (default) | INTERNAL | PRIVATE
     source(layout.projectDirectory.dir("src/main/json"))  // default when omitted
     rootClassName("user_profile.json", "Profile") // optional per-file override
 
@@ -27,6 +28,7 @@ j2kAuto {
 | --- | --- | --- |
 | `packageName` | `generated.j2kauto` | Package for the generated Kotlin files |
 | `annotationStyle` | `AnnotationStyle.KOTLINX` | Which serialization annotations to emit |
+| `visibility` | `Visibility.PUBLIC` | Visibility modifier for generated classes |
 | `source(dir)` | `src/main/json` | Directory scanned for `.json` samples |
 | `rootClassName(file, name)` | inferred from filename | Overrides the generated class name for a specific file — required when a file's root is a JSON **array**, since there's no filename-derived singular name |
 | `useVar` | `false` | Emit `var` properties instead of `val` |
@@ -46,6 +48,18 @@ j2kAuto {
 
 Unknown or conflicting shapes fall back to `JsonElement` (`KOTLINX`) or
 `Any?` (other styles).
+
+## Visibility options
+
+`Visibility` controls the visibility modifier of generated data classes:
+
+| Visibility | Modifier |
+| --- | --- |
+| `PUBLIC` (default) | `public` |
+| `INTERNAL` | `internal` |
+| `PRIVATE` | `private` |
+
+Note: `PRIVATE` classes are generated as top-level private classes in their respective files.
 
 ## Inference rules
 
