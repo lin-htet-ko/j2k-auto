@@ -7,6 +7,18 @@ A Gradle plugin that generates Kotlin data classes from sample JSON files at bui
 
 ---
 
+## ✨ Features
+
+- **Nested Object Mapping**: JSON objects become nested `data class`es; arrays become `List<T>`.
+- **Intelligent Nullability**: Missing or `null` fields in samples automatically become nullable properties.
+- **Idiomatic Naming**: `snake_case` or `kebab-case` keys become `camelCase` properties, with original names preserved via annotations.
+- **Subpackage Mirroring**: Mirrors your JSON directory structure in generated Kotlin packages.
+- **Multiple Targets**: Support for separate remote API and local cache models with independent configurations.
+- **Configurable Visibility**: Control class visibility (`public`, `internal`, `private`) via DSL.
+- **Annotation Styles**: Support for [kotlinx.serialization](https://github.com/Kotlin/kotlinx.serialization), [Moshi](https://github.com/square/moshi), and [Gson](https://github.com/google/gson).
+
+---
+
 ## 📖 Documentation
 
 For full features, inference rules, and detailed integration guides, visit our documentation site:
@@ -21,14 +33,16 @@ For full features, inference rules, and detailed integration guides, visit our d
 In your module's `build.gradle.kts` (Android or Kotlin/JVM):
 
 ```kotlin
+import dev.linhtetko.j2kauto.AnnotationStyle
+
 plugins {
-    id("io.github.lin-htet-ko.j2k-auto") version "0.0.1"
+    id("io.github.lin-htet-ko.j2k-auto") version "1.0.0-alpha"
 }
 
 j2kAuto {
     packageName = "com.example.model"            // default: generated.j2kauto
-    // visibility = dev.linhtetko.j2kauto.Visibility.PUBLIC // PUBLIC (default) | INTERNAL | PRIVATE
-    // source(layout.projectDirectory.dir("src/main/json"))  // default
+    annotationStyle = AnnotationStyle.KOTLINX     // default
+    visibility = Visibility.PUBLIC               // PUBLIC (default) | INTERNAL | PRIVATE
 
     // Support for multiple packages/sources
     targets {
@@ -42,9 +56,7 @@ j2kAuto {
 
 ### 2. Add JSON Samples
 
-Place your `.json` files in `src/main/json/`. Directory structure is
-automatically mirrored in Kotlin packages (e.g.
-`src/main/json/auth/user.json` → `com.example.model.auth.User`).
+Place your `.json` files in `src/main/json/`. Directory structure is automatically mirrored (e.g., `src/main/json/auth/user.json` → `com.example.model.auth.User`).
 
 ```json
 {
@@ -63,6 +75,13 @@ import com.example.model.User
 
 val user = User(id = 1, name = "Lin", email = "lin@example.com")
 ```
+
+---
+
+## 🛠️ Samples
+
+Check out the consolidated Android sample for a real-world integration with Retrofit and Jetpack Compose:
+👉 **[`samples/j2kautoandroidsample`](samples/j2kautoandroidsample)**
 
 ---
 
