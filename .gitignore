@@ -8,7 +8,6 @@ samples/**/build/
 samples/**/.gradle/
 docs/**
 docs/*.md
-samples/
 onboarding/site/
 onboarding/.venv/
 .artifacts/
