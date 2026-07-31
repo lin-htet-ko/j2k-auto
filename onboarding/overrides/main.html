@@ -29,6 +29,7 @@
     ]
   }
   </script>
+  <link rel="alternate" type="text/markdown" href="{{ config.site_url }}llms.txt" title="LLM-friendly Context">
 {% endblock %}
 
 {% block fonts %}
@@ -48,6 +49,10 @@
       </p>
     </div>
   </section>
+  <div style="display:none">
+    <a href="{{ config.site_url }}llms.txt">LLM SEO</a>
+    <a href="{{ config.site_url }}ai-context/">AI Technical Context</a>
+  </div>
   {% endif %}
 {% endblock %}
 
