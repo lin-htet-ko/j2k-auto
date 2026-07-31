@@ -1,0 +1,22 @@
+# j2k-auto
+
+> A Gradle plugin that generates Kotlin data classes from sample JSON files at build time.
+
+## Details
+j2k-auto eliminates DTO boilerplate by inferring idiomatic Kotlin models directly from JSON samples. It handles nested objects, arrays, nullability, and name mapping (snake_case to camelCase) automatically.
+
+## Key Features
+- **Inference Engine**: Lattice-based type merging for robust model generation.
+- **Annotation Styles**: Supports kotlinx.serialization, Moshi, and Gson.
+- **Gradle Integration**: Hilt/KSP-style generation, configuration-cache safe.
+- **Advanced Shaping**: Automatic subpackage mirroring and configurable visibility.
+
+## Documentation
+- [Overview](https://lin-htet-ko.github.io/j2k-auto/)
+- [Getting Started](https://lin-htet-ko.github.io/j2k-auto/getting-started/)
+- [Implementation Details](https://lin-htet-ko.github.io/j2k-auto/implementation/)
+- [AI Context](https://lin-htet-ko.github.io/j2k-auto/ai-context/)
+- [Samples](https://lin-htet-ko.github.io/j2k-auto/samples/)
+
+## Technical Context
+The plugin uses KotlinPoet for code generation and a custom schema inference engine. It operates during the Gradle build lifecycle, ensuring models are always in sync with JSON samples.
