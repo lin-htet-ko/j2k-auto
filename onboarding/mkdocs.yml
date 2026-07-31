@@ -1,6 +1,6 @@
 # Project information
 site_name: 'j2k-auto'
-site_description: 'A Gradle plugin that generates Kotlin data classes from sample JSON files at build time'
+site_description: 'A robust Gradle plugin that generates Kotlin data classes from sample JSON files at build time. Eliminate DTO boilerplate with automatic type inference, shape unification, and support for kotlinx.serialization, Moshi, and Gson.'
 site_author: 'Lin Htet Ko'
 site_url: 'https://lin-htet-ko.github.io/j2k-auto/'
 
@@ -60,6 +60,7 @@ extra:
       link: 'https://github.com/lin-htet-ko/j2k-auto'
     - icon: fontawesome/solid/box-archive
       link: 'https://central.sonatype.com/artifact/io.github.lin-htet-ko/j2k-auto'
+  ai_context: 'https://lin-htet-ko.github.io/j2k-auto/ai-context/'
 
 extra_css:
   - 'stylesheets/extra.css'

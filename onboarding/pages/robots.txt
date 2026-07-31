@@ -1,0 +1,5 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://lin-htet-ko.github.io/j2k-auto/sitemap.xml
+LLMS: https://lin-htet-ko.github.io/j2k-auto/llms.txt

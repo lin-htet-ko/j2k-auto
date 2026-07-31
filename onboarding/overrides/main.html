@@ -1,5 +1,36 @@
 {% extends "base.html" %}
 
+{% block extrahead %}
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "SoftwareApplication",
+    "name": "j2k-auto",
+    "operatingSystem": "Windows, macOS, Linux, Android",
+    "applicationCategory": "DeveloperApplication",
+    "description": "A Gradle plugin that generates Kotlin data classes from sample JSON files at build time.",
+    "softwareVersion": "1.0.0-alpha",
+    "author": {
+      "@type": "Person",
+      "name": "Lin Htet Ko"
+    },
+    "offers": {
+      "@type": "Offer",
+      "price": "0",
+      "priceCurrency": "USD"
+    },
+    "url": "https://lin-htet-ko.github.io/j2k-auto/",
+    "downloadUrl": "https://central.sonatype.com/artifact/io.github.lin-htet-ko/j2k-auto",
+    "featureList": [
+      "Automatic type inference",
+      "Shape unification",
+      "Multi-library support (kotlinx.serialization, Moshi, Gson)",
+      "Gradle build-time generation"
+    ]
+  }
+  </script>
+{% endblock %}
+
 {% block fonts %}
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
